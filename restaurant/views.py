@@ -32,10 +32,11 @@ class SingleMenuApi(generics.RetrieveUpdateAPIView, generics.DestroyAPIView):
 
 
 class BookingApi(viewsets.ViewSet):
-    # permission_classes = [IsAuthenticated]
     queryset = Booking.objects.all()
     permission_classes_by_action = {
-        #'create': [IsAuthenticated],
+        'create': [IsAuthenticated],
+        'update': [IsAuthenticated],
+        'delete': [IsAuthenticated],
         'list': [AllowAny]
     }
 
