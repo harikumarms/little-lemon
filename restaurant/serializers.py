@@ -1,4 +1,7 @@
+import json
 from rest_framework import serializers
+from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
+from rest_framework_simplejwt.views import TokenObtainPairView
 from django.contrib.auth.models import User
 from .models import Menu, Booking
 
@@ -17,3 +20,13 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model=User
         fields = ['url', 'username', 'email', 'groups']
+        
+        
+class CustomJWTTokenseralizers(TokenObtainPairSerializer):
+
+    @classmethod    
+    def get_token(cls, user):
+        token = super().get_token(user)
+        token['user_id'] = user.id
+        token['username'] = user.username
+        return token
